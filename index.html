@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#3b82f6" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="logo.png" />
+  <title>R-Abhi Tech Solution - Sponsor Management and Social Media Marketing</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e293b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+  <!-- Admin Login Overlay -->
+  <div id="admin-login-overlay">
+      <div class="admin-login-box">
+          <span class="close-btn" onclick="document.getElementById('admin-login-overlay').style.display = 'none'">&times;</span>
+          <h2 style="color: #fff; margin-bottom: 20px;"><ion-icon name="shield-checkmark-outline"></ion-icon> Admin Access</h2>
+          <form id="admin-login-form" onsubmit="handleAdminLoginFront(event)">
+              <input type="email" id="admin-email" placeholder="admin@portal.com" required>
+              <input type="password" id="admin-password" placeholder="Password" required>
+              <button type="submit">Login to Dashboard</button>
+          </form>
+      </div>
+  </div>
+  <header class="topbar">
+    <div class="topbar-brand">
+      <img src="logo2.png" alt="R-Abhi Tech Solution" class="site-logo" />
+      <div class="brand-details">
+        <p class="brand-name">R-ABHI TECH SOLUTION <img src="logostar.png" alt="star" style="height: 1em; width: auto;" /></p>
+        <p class="brand-tagline">Connecting Brands, Creating Impact, Driving Growth.</p>
+      </div>
+    </div>
+    
+    <div class="header-main-actions">
+      <a href="analytics.html" class="secondary" ><i class="ph ph-chart-bar" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Dashboard</a>
+      <a href="login.html" class="primary" ><i class="ph ph-lock-key" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Login</a>
+      <a href="#" onclick="showAdminLogin(event)" class="primary" style="background: #ef4444;"><i class="ph ph-shield-check" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Admin Panel</a>
+    </div>
+
+    <div class="header-nav-actions">
+      <a href="#overview" class="nav-link"><i class="ph ph-house" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Overview</a>
+      <a href="login.html" class="nav-link"><i class="ph ph-sign-in" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Login Portals</a>
+      <a href="#sponsor-registration" class="nav-link"><i class="ph ph-handshake" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Sponsors</a>
+      <a href="#client-registration" class="nav-link"><i class="ph ph-users" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Clients</a>
+      <a href="analytics.html" class="nav-link"><i class="ph ph-megaphone" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Marketing</a>
+      <a href="#register" class="nav-link"><i class="ph ph-user-plus" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Register</a>
+      <a href="#about" class="nav-link"><i class="ph ph-info" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>About</a>
+      <a href="analytics.html#media" class="nav-link"><i class="ph ph-image" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Media</a>
+      <a href="#team" class="nav-link"><i class="ph ph-users-three" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Team</a>
+      <a href="#registration-stats" class="nav-link"><i class="ph ph-activity" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Live Registration</a>
+      <a href="#contact" class="nav-link"><i class="ph ph-envelope-simple" style="margin-right: 5px; font-size: 1.1em; vertical-align: middle;"></i>Contact</a>
+    </div>
+  </header>
+  <div class="page-shell">
+
+    <nav class="bottom-nav" aria-label="Bottom navigation">
+      <button class="bottom-nav-item" type="button" onclick="window.location.href='#'" aria-label="Home">🏠</button>
+      <button class="bottom-nav-item" type="button" onclick="window.location.href='#sponsor-registration'"
+        aria-label="Sponsors">🤝</button>
+      <button class="bottom-nav-item" type="button" onclick="window.location.href='#client-registration'"
+        aria-label="Clients">👥</button>
+      <button class="bottom-nav-item" type="button" onclick="window.location.href='analytics.html'"
+        aria-label="Marketing">📣</button>
+      <button class="bottom-nav-item" type="button" onclick="window.location.href='#registration-stats'"
+        aria-label="Insights">📊</button>
+    </nav>
+
+    <section class="search-section">
+      <div class="search-panel">
+        <label for="section-search">Quick search</label>
+        <input id="section-search" type="search" placeholder="Search sections..." aria-label="Search sections" />
+        <p>Type words like sponsors, clients, marketing, register, or about to jump directly to that area.</p>
+      </div>
+    </section>
+    <header class="site-header" id="overview">
+      <div class="hero-copy">
+        <span class="eyebrow">Sponsor & Client Portal</span>
+        <h1>Sponsor Management and Social Media Marketing</h1>
+        <p class="subtitle1">
+          Reimagine how brands and sponsors collaborate with transparent workflows and powerful campaign tools. Built
+          for trust, growth, and business-ready deployment across teams and client networks.</p>
+        <p class="subtitle2">A polished sponsor
+          portal and social media marketing hub for business use — ready to launch, manage relationships, and drive
+          campaigns.</p>
+
+        <div class="hero-social" style="margin-top: 30px; display: flex; gap: 15px; justify-content: center;">
+          <a href="#contact" class="social-link"
+            style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem;">Instagram</a>
+          <a href="#about" class="social-link"
+            style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem;">LinkedIn</a>
+          <a href="analytics.html#media" class="social-link"
+            style="color: #a1a1aa; text-decoration: none; font-size: 0.95rem;">Twitter</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero-cards">
+      <article class="hero-card">
+        <span class="hero-card-label">Active Sponsors</span>
+        <strong id="hero-sponsor-count">0</strong>
+        <p>Monitor your active sponsor relationships at a glance.</p>
+      </article>
+      <article class="hero-card">
+        <span class="hero-card-label">Active Clients</span>
+        <strong id="hero-client-count">0</strong>
+        <p>See how many client records are ready for follow-up.</p>
+      </article>
+      <article class="hero-card">
+        <span class="hero-card-label">Portfolio Status</span>
+        <strong id="hero-portfolio-label">Live</strong>
+        <p>Built for modern sponsor portfolio tracking.</p>
+      </article>
+    </section>
+
+    <section class="about-section" id="about">
+      <div class="about-copy">
+        <span class="eyebrow">About Us</span>
+        <h2>R-ABHI TECH SOLUTION</h2>
+        <p><strong>R-ABHI TECH SOLUTION</strong> is a professional Sponsor Management and Social Media Marketing agency
+          dedicated to helping businesses, startups, events, organizations, influencers, and brands maximize their
+          market presence and business growth.</p>
+        <p>We specialize in sponsorship acquisition, brand partnerships, digital marketing, social media management,
+          content creation, influencer marketing, and event promotions. Our team works strategically to connect brands
+          with the right sponsors and target audiences, ensuring maximum visibility, engagement, and return on
+          investment.</p>
+        <p>At R-ABHI TECH SOLUTION, we believe that strong partnerships and innovative marketing strategies are the
+          foundation of sustainable business growth. We help our clients build powerful brand identities, attract
+          quality sponsors, generate leads, and achieve measurable results through creative and data-driven marketing
+          solutions.</p>
+      </div>
+      <div class="about-profile">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80"
+          alt="Company team meeting" />
+        <div class="about-profile-text">
+          <h3>Connecting Brands, Creating Impact, Driving Growth.</h3>
+          <p>Our portal supports sponsor acquisition, influencer collaboration, campaign planning, and transparent
+            performance reporting so every partner stays aligned and accountable.</p>
+          <p>We combine sponsor network management with social media marketing to deliver campaigns that win attention,
+            build trust, and grow business results.</p>
+        </div>
+      </div>
+      <div class="about-grid">
+        <article class="about-card">
+          <h3>Mission</h3>
+          <p>To empower businesses and brands through innovative sponsorship solutions and result-oriented digital
+            marketing strategies that create long-term value and growth.</p>
+        </article>
+        <article class="about-card">
+          <h3>Vision</h3>
+          <p>To become one of India's most trusted Sponsor Management and Digital Marketing companies by delivering
+            exceptional service, strategic partnerships, and measurable business success.</p>
+        </article>
+        <article class="about-card">
+          <h3>Sponsor Management</h3>
+          <ul>
+            <li>Sponsorship Acquisition</li>
+            <li>Brand Partnership Development</li>
+            <li>Sponsorship Proposal & Pitch Deck Creation</li>
+            <li>Sponsor Negotiation & Deal Closure</li>
+            <li>Event Sponsorship Management</li>
+          </ul>
+        </article>
+        <article class="about-card">
+          <h3>Social Media Marketing</h3>
+          <ul>
+            <li>Social Media Strategy Development</li>
+            <li>Facebook, Instagram & LinkedIn Marketing</li>
+            <li>Content Creation & Branding</li>
+            <li>Influencer Marketing & Paid Advertising</li>
+            <li>Lead Generation Campaigns</li>
+          </ul>
+        </article>
+      </div>
+      <div class="workflow-grid">
+        <article class="workflow-block">
+          <h4>Phase 1 – Client Acquisition</h4>
+          <pre>Lead Generation
+↓
+Client Inquiry
+↓
+Requirement Discussion
+↓
+Business Analysis
+↓
+Proposal Submission
+↓
+Agreement & Onboarding</pre>
+        </article>
+        <article class="workflow-block">
+          <h4>Phase 2 – Sponsor Management Workflow</h4>
+          <pre>Client Requirement Analysis
+↓
+Sponsor Research
+↓
+Database Creation
+↓
+Sponsor Outreach
+↓
+Meeting & Presentation
+↓
+Negotiation
+↓
+Sponsorship Deal Closure
+↓
+Contract Management
+↓
+Sponsor Activation
+↓
+Performance Report
+↓
+Relationship Management
+↓
+Renewal & Upselling</pre>
+        </article>
+        <article class="workflow-block">
+          <h4>Phase 3 – Social Media Marketing Workflow</h4>
+          <pre>Brand Audit
+↓
+Market Research
+↓
+Content Strategy
+↓
+Content Calendar
+↓
+Creative Design
+↓
+Content Approval
+↓
+Post Scheduling
+↓
+Community Engagement
+↓
+Paid Advertising
+↓
+Lead Generation
+↓
+Analytics & Reporting
+↓
+Optimization
+↓
+Growth Scaling</pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="landing-features">
+      <div class="landing-head">
+        <span class="eyebrow">"Features/Services"</span>
+        <h2>Launch a polished home page experience for every visitor.</h2>
+        <p>Fast navigation, clean sections, and clear actions make managing sponsors and clients feel effortless.</p>
+      </div>
+      <div class="landing-grid">
+        <article class="landing-card">
+          <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" class="landing-card-svg">
+            <defs>
+              <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect x="10" y="10" width="80" height="50" fill="url(#lg1)" rx="4" opacity="0.2" />
+            <rect x="15" y="15" width="25" height="15" fill="#60a5fa" rx="2" />
+            <rect x="50" y="15" width="25" height="15" fill="#60a5fa" rx="2" />
+            <rect x="15" y="40" width="25" height="15" fill="#60a5fa" rx="2" />
+            <rect x="50" y="40" width="25" height="15" fill="#60a5fa" rx="2" />
+          </svg>
+          <span class="step-icon">✨</span>
+          <h3>Modern dashboard</h3>
+          <h4>Centralized Portfolio</h4>
+          <p>Monitor active records, vendor details,and client performance metrics instantly on a single, secured
+            dashboard.</p>
+        </article>
+        <article class="landing-card">
+          <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" class="landing-card-svg">
+            <defs>
+              <linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="25" r="12" fill="url(#lg2)" opacity="0.3" />
+            <circle cx="50" cy="25" r="8" fill="#10b981" />
+            <path d="M 45 25 L 48 28 L 55 18" stroke="#18181b" stroke-width="1.5" fill="none" stroke-linecap="round" />
+            <rect x="20" y="50" width="60" height="3" fill="url(#lg2)" opacity="0.6" rx="1.5" />
+            <rect x="20" y="60" width="40" height="3" fill="url(#lg2)" opacity="0.4" rx="1.5" />
+          </svg>
+          <span class="step-icon">⚡</span>
+          <h3>Instant actions</h3>
+          <p>Create, search, and update records with fast, responsive controls.</p>
+        </article>
+        <article class="landing-card">
+          <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" class="landing-card-svg">
+            <defs>
+              <linearGradient id="lg3" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <rect x="25" y="15" width="50" height="35" fill="#18181b" stroke="url(#lg3)" stroke-width="1.5" rx="3" />
+            <circle cx="50" cy="32" r="8" fill="url(#lg3)" opacity="0.3" />
+            <circle cx="50" cy="32" r="5" fill="#f59e0b" />
+            <line x1="30" y1="60" x2="70" y2="60" stroke="url(#lg3)" stroke-width="2" stroke-linecap="round"
+              opacity="0.6" />
+            <circle cx="38" cy="68" r="3" fill="url(#lg3)" opacity="0.5" />
+            <circle cx="50" cy="68" r="3" fill="url(#lg3)" />
+            <circle cx="62" cy="68" r="3" fill="url(#lg3)" opacity="0.5" />
+          </svg>
+          <span class="step-icon">📱</span>
+          <h3>Responsive design</h3>
+          <p>A seamless experience across desktop and mobile screens with fluid layout support.</p>
+        </article>
+        <article class="landing-card">
+          <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" class="landing-card-svg">
+            <defs>
+              <linearGradient id="lg4" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M 50 15 L 60 25 L 50 35 L 40 25 Z" fill="url(#lg4)" opacity="0.3" />
+            <path d="M 50 15 L 60 25 L 50 35 L 40 25 Z" fill="none" stroke="#8b5cf6" stroke-width="1.5" />
+            <path d="M 50 35 L 60 45 L 50 55 L 40 45 Z" fill="url(#lg4)" opacity="0.5" />
+            <path d="M 50 35 L 60 45 L 50 55 L 40 45 Z" fill="none" stroke="#8b5cf6" stroke-width="1.5" />
+            <path d="M 50 55 L 60 65 L 50 75 L 40 65 Z" fill="url(#lg4)" />
+            <path d="M 50 55 L 60 65 L 50 75 L 40 65 Z" fill="none" stroke="#18181b" stroke-width="1" />
+          </svg>
+          <span class="step-icon">🎯</span>
+          <h3>Smart navigation</h3>
+          <p>Clear section anchors and call-to-action buttons guide users to the right workflow.</p>
+        </article>
+      </div>
+    </section>
+
+
+    <section class="section-block">
+      <div class="section-head">
+        <span class="eyebrow">Portal overview</span>
+        <h2>Separate workflows, clearly organized</h2>
+        <p>Each section is placed in the right location with distinct heading structure and breathing room so the page
+          feels less crowded.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Unified Portfolio</h3>
+          <p>Manage sponsors and clients together in a single portal with consistent controls and actions.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Fast Operations</h3>
+          <p>Create, edit, and delete records instantly with responsive form flows and live dashboard metrics.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Clear Insights</h3>
+          <p>Get an immediate view of your portfolio totals, active relationships, and the latest updates.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-head">
+        <span class="eyebrow">Dashboard snapshot</span>
+        <h2>Instant portfolio metrics</h2>
+        <p>See sponsor and client totals at a glance in one clean, spaced-out dashboard section.</p>
+      </div>
+      <div class="dashboard grid">
+        <article class="metric-card accent-1">
+          <span>Total Sponsors</span>
+          <strong id="total-sponsors">0</strong>
+        </article>
+        <article class="metric-card accent-2">
+          <span>Total Clients</span>
+          <strong id="total-clients">0</strong>
+        </article>
+        <article class="metric-card accent-3">
+          <span>Active Clients</span>
+          <strong id="active-clients">0</strong>
+        </article>
+        <article class="metric-card accent-4">
+          <span>Prospect Sponsors</span>
+          <strong id="prospect-sponsors">0</strong>
+        </article>
+      </div>
+      <div class="dashboard-summary">
+        <p>See a clearer snapshot of your growth pipeline. Manage sponsors, clients, and campaign engagement with a more
+          polished business dashboard.</p>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+    <section class="team-section" id="team">
+      <div class="team-header">
+        <span class="eyebrow">Our Team</span>
+        <h2>Meet the leadership & team</h2>
+        <p>Experienced professionals dedicated to building the best sponsor management platform.</p>
+      </div>
+      <div class="team-carousel">
+        <button class="team-prev" aria-label="Previous">‹</button>
+        <div class="team-grid">
+          <article class="team-card">
+            <div class="team-photo">
+              <img
+                src="https://lh3.googleusercontent.com/pw/AP1GczPujU4DDCvLL_fdn6d8zTL22boUaPenUHHGIYlyEy_evUDRvaHYRa5YWv64m5GMChNJ-7qgRTCbbsWmNdJQkdYu9iXi5Wv21QXflWIAhyZ24FWCVFlUiS9_qVvjNUX_cYZkJfdRy-hWernatlp05zE0vg=w623-h643-s-no?authuser=0"
+                alt="Rajput Abhishek" class="profile-img" />
+            </div>
+            <h3>Rajput Abhishek</h3>
+            <p class="designation">Founder & CEO</p>
+            <p class="experience">Sponsorship management and digital marketing</p>
+            <div class="team-social">
+              <a href="#" data-icon="🔗">LinkedIn</a>
+              <a href="#" data-icon="𝕏">Twitter</a>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-photo">
+              <img src="https://object.pixocial.com/pixocial/dmxffni837f1xrj8pki9xgrl.jpg" alt="Himansi Singh"
+                class="profile-img" />
+            </div>
+            <h3>Himansi singh</h3>
+            <p class="designation">Director of Operations</p>
+            <p class="experience">12+ years in business operations and strategy</p>
+            <div class="team-social">
+              <a href="#" data-icon="🔗">LinkedIn</a>
+              <a href="#" data-icon="𝕏">Twitter</a>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-photo">
+              <img src="https://cdn.pixabay.com/photo/2023/02/17/16/25/man-7796384_1280.jpg" alt="Amit Patel"
+                class="profile-img" />
+            </div>
+            <h3>Amit Patel</h3>
+            <p class="designation">Head of Technology</p>
+            <p class="experience">10+ years in software development and cloud architecture</p>
+            <div class="team-social">
+              <a href="#" data-icon="🔗">LinkedIn</a>
+              <a href="#" data-icon="𝕏">Twitter</a>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-photo">
+              <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="ta4" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                <circle cx="60" cy="60" r="56" fill="url(#ta4)" />
+                <circle cx="60" cy="36" r="15" fill="#fef3c7" />
+                <path d="M 36 81 Q 36 71 46 66 L 74 66 Q 84 71 84 81 L 84 99 Q 84 109 74 109 L 46 109 Q 36 109 36 99 Z"
+                  fill="#fef3c7" />
+              </svg>
+            </div>
+            <h3>Neha Desai</h3>
+            <p class="designation">Senior Client Manager</p>
+            <p class="experience">8+ years in client success and relationship management</p>
+            <div class="team-social">
+              <a href="#" data-icon="🔗">LinkedIn</a>
+              <a href="#" data-icon="𝕏">Twitter</a>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-photo">
+              <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="ta5" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                <circle cx="60" cy="60" r="56" fill="url(#ta5)" />
+                <circle cx="60" cy="38" r="15" fill="#cffafe" />
+                <path d="M 38 78 Q 38 68 48 63 L 72 63 Q 82 68 82 78 L 82 96 Q 82 106 72 106 L 48 106 Q 38 106 38 96 Z"
+                  fill="#cffafe" />
+              </svg>
+            </div>
+            <h3>Vikram Singh</h3>
+            <p class="designation">Lead Product Designer</p>
+            <p class="experience">9+ years in UX/UI design and product strategy</p>
+            <div class="team-social">
+              <a href="#" data-icon="🔗">LinkedIn</a>
+              <a href="#" data-icon="𝕏">Twitter</a>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-photo">
+              <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="ta6" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#be185d;stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                <circle cx="60" cy="60" r="56" fill="url(#ta6)" />
+                <circle cx="60" cy="37" r="14" fill="#fce7f3" />
+                <path
+                  d="M 40 82 Q 40 72 50 67 L 70 67 Q 80 72 80 82 L 80 100 Q 80 110 70 110 L 50 110 Q 40 110 40 100 Z"
+                  fill="#fce7f3" />
+              </svg>
+            </div>
+            <h3>Anjali Verma</h3>
+            <p class="designation">Marketing Manager</p>
+            <p class="experience">7+ years in digital marketing and brand development</p>
+            <div class="team-social">
+              <a href="#" data-icon="🔗">LinkedIn</a>
+              <a href="#" data-icon="𝕏">Twitter</a>
+            </div>
+          </article>
+        </div>
+        <button class="team-next" aria-label="Next">›</button>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="contact-card">
+        <div class="contact-copy">
+          <span class="eyebrow">Contact</span>
+          <h2>Ready to grow your sponsor portfolio?</h2>
+          <p>Share your requirements or ask for help with sponsor partnerships and client management.</p>
+          <div class="contact-info-grid">
+            <div>
+              <strong>Email</strong>
+              <p>rjabhi0091@gmail.com</p>
+            </div>
+            <div>
+              <strong>Phone</strong>
+              <p>+91 93350-49370</p>
+            </div>
+            <div>
+              <strong>Office</strong>
+              <p>New Delhi, India</p>
+            </div>
+            <div>
+              <strong>Social</strong>
+              <div class="social-links">
+                <a href="https://instagram.com/portfolio_portal" target="_blank" data-icon="📸">Instagram</a>
+                <a href="https://linkedin.com/company/portfolio-portal" target="_blank" data-icon="🔗">LinkedIn</a>
+                <a href="https://twitter.com/portfolio_portal" target="_blank" data-icon="🐦">Twitter</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form id="contact-form" class="contact-form">
+          <label>Name<input type="text" id="contact-name" required /></label>
+          <label>Email<input type="email" id="contact-email" required /></label>
+          <label>Message<textarea id="contact-message-input" rows="4" required></textarea></label>
+          <div class="button-row">
+            <button type="submit" data-icon="✉️">Send Message</button>
+          </div>
+          <div id="contact-status" class="status-message"></div>
+        </form>
+      </div>
+    </section>
+
+
+    <section class="registration-section" id="register">
+      <div class="about-copy">
+        <span class="eyebrow">Registration</span>
+        <h2>Account Registration</h2>
+        <p>Choose the appropriate registration path below to create your sponsor or client account and get started
+          quickly.</p>
+      </div>
+      <div class="register-grid">
+        <article class="register-card" id="sponsor-registration">
+          <h3>Sponsor Registration</h3>
+          <p>Register as a sponsor to manage brand partnerships and campaign opportunities.</p>
+          <form id="register-sponsor-form" class="record-form">
+            <label>Name<input type="text" id="register-sponsor-name" required /></label>
+            <label>Email<input type="email" id="register-sponsor-email" required /></label>
+            <label>Phone<input type="text" id="register-sponsor-phone" required /></label>
+            <label>Status
+              <select id="register-sponsor-status" required>
+                <option value="prospect">Prospect</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </label>
+            <label>Password<input type="password" id="register-sponsor-password" required
+                autocomplete="new-password" /></label>
+            <label>Notes<textarea id="register-sponsor-notes" rows="4"></textarea></label>
+            <div class="button-row">
+              <button type="submit" data-icon="📝">Register Sponsor</button>
+              <button type="button" id="register-sponsor-clear" class="secondary" data-icon="🧹">Clear</button>
+            </div>
+            <div id="register-sponsor-feedback" class="status-message"></div>
+          </form>
+        </article>
+        <article class="register-card" id="client-registration">
+          <h3>Client Registration</h3>
+          <p>Register as a client to join sponsor campaigns and manage your own profile.</p>
+          <form id="register-client-form" class="record-form">
+            <label>Name<input type="text" id="register-client-name" required /></label>
+            <label>Email<input type="email" id="register-client-email" required /></label>
+            <label>Company<input type="text" id="register-client-company" required /></label>
+            <label>Phone<input type="text" id="register-client-phone" required /></label>
+            <label>Status
+              <select id="register-client-status" required>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="prospect">Prospect</option>
+              </select>
+            </label>
+            <label>Password<input type="password" id="register-client-password" required
+                autocomplete="new-password" /></label>
+            <label>Notes<textarea id="register-client-notes" rows="4"></textarea></label>
+            <div class="button-row">
+              <button type="submit" data-icon="📝">Register Client</button>
+              <button type="button" id="register-client-clear" class="secondary" data-icon="🧹">Clear</button>
+            </div>
+            <div id="register-client-feedback" class="status-message"></div>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <section id="registration-stats" class="live-analytics" style="margin-top: 60px; margin-bottom: 40px;">
+      <div class="hero-dashboard"
+        style="text-align: center; max-width: 1200px; margin: 0 auto; background: rgba(15, 23, 42, 0.6); padding: 40px; border-radius: 24px; border: 1px solid rgba(56, 189, 248, 0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+        <div class="hero-dashboard-head" style="margin-bottom: 30px;">
+          <span class="eyebrow"
+            style="color: #8b5cf6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Live
+            Analytics</span>
+          <h2 style="font-size: 2.2rem; margin: 10px 0; color: #fff;">Registration Counters</h2>
+          <p style="color: #94a3b8; max-width: 600px; margin: 0 auto;">See in real-time how many sponsors and clients
+            are registering on the portal right now.</p>
+        </div>
+        <div class="hero-dashboard-grid" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+          <article class="hero-dashboard-card accent-1"
+            style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 16px; min-width: 200px; border-top: 3px solid #8b5cf6;">
+            <span style="display: block; font-size: 1rem; color: #a1a1aa; margin-bottom: 10px;">Total Sponsors</span>
+            <strong id="hero-dashboard-sponsors" style="font-size: 2.5rem; color: #fff;">0</strong>
+          </article>
+          <article class="hero-dashboard-card accent-2"
+            style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 16px; min-width: 200px; border-top: 3px solid #10b981;">
+            <span style="display: block; font-size: 1rem; color: #a1a1aa; margin-bottom: 10px;">Total Clients</span>
+            <strong id="hero-dashboard-clients" style="font-size: 2.5rem; color: #fff;">0</strong>
+          </article>
+          <article class="hero-dashboard-card accent-3"
+            style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 16px; min-width: 200px; border-top: 3px solid #f59e0b;">
+            <span style="display: block; font-size: 1rem; color: #a1a1aa; margin-bottom: 10px;">Total
+              Registrations</span>
+            <strong id="hero-dashboard-registrations" style="font-size: 2.5rem; color: #fff;">0</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>Built for Sponsor Portfolio Management. Powered by FastAPI and lightweight UI.</p>
+    </footer>
+  </div>
+
+  <div class="modal-backdrop hidden" id="login-modal">
+    <div class="modal-card">
+      <button id="close-login" class="modal-close" data-icon="✖️"></button>
+      <h2 id="login-title">Account Login</h2>
+      <p id="login-description">Sign in as a sponsor or client to access personalized portal features.</p>
+      <form id="login-form" class="record-form">
+        <label class="hidden-role">Login role
+          <select id="login-role">
+            <option value="sponsor">Sponsor</option>
+            <option value="client">Client</option>
+          </select>
+        </label>
+        <label>Email<input type="email" id="login-email" required /></label>
+        <label>Password<input type="password" id="login-password" required /></label>
+        <div class="button-row">
+          <button type="submit" ><i class="ph ph-key" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Login</button>
+          <button type="button" id="close-login-secondary" class="secondary" ><i class="ph ph-x" style="margin-right: 5px; font-size: 1.2em; vertical-align: middle;"></i>Cancel</button>
+        </div>
+      </form>
+      <div id="login-status" class="status-message"></div>
+    </div>
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
+  </script>
+
+  <script src="/static/app.js"></script>
+
+  <!-- Floating Actions -->
+  <div class="floating-actions">
+    <button class="float-btn" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+      title="Back to Top">
+      <ion-icon name="arrow-up-outline"></ion-icon>
+    </button>
+    <button class="float-btn chat-btn" onclick="alert('Live chat support connecting...')" title="Live Chat Support">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+    </button>
+  </div>
+
+  <script>
+    // Back to Top Logic
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('backToTop');
+      if (window.scrollY > 300) {
+        btn.classList.add('show');
+      } else {
+        btn.classList.remove('show');
+      }
+    });
+
+    // Admin Login Logic
+    function showAdminLogin(event) {
+        event.preventDefault();
+        document.getElementById('admin-login-overlay').style.display = 'flex';
+    }
+
+    async function handleAdminLoginFront(event) {
+        event.preventDefault();
+        const email = document.getElementById('admin-email').value;
+        const password = document.getElementById('admin-password').value;
+        const BASE_URL = 'http://127.0.0.1:8000';
+        
+        try {
+            const response = await fetch(BASE_URL + '/auth/admin-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: password })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('access_token', data.token);
+                window.location.href = 'admin.html';
+            } else {
+                alert('Login failed. Please check your credentials.');
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert('An error occurred. Please try again.');
+        }
+    }
+  </script>
+</body>
+
+
+</html>

@@ -1,0 +1,18 @@
+42: <section class="nav-section">
+56: <section class="search-section">
+101: <section class="hero-cards">
+119: <section class="landing-features">
+207: <section class="social-marketing" id="marketing">
+229: <section class="section-block">
+252: <section class="section-block">
+282: <section class="cta-strip">
+293: <section class="management-window">
+301: <section class="management-panel window-panel active sponsor-window" id="management">
+372: <section class="management-panel window-panel client-window" id="clients">
+450: <section class="management-panel window-panel marketing-window" id="marketing-window">
+536: <section class="management-panel window-panel insights-window" id="insights-window">
+579: <section class="registration-section" id="register">
+639: <section class="about-section" id="about">
+770: <section class="media-section" id="media">
+920: <section class="team-section" id="team">
+1049: <section class="contact-section" id="contact">

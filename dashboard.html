@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff" />
+    <title>Dashboard - R-Abhi Tech Solution</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc; /* very light blue-gray background for main area */
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            color: #334155;
+        }
+
+        /* Sidebar Styling (Matches Reference Image) */
+        .sidebar {
+            width: 260px;
+            background-color: #ffffff;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 15px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        /* Create Button */
+        .create-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            border: 1px solid #cbd5e1;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            color: #334155;
+            margin-bottom: 25px;
+            transition: 0.2s;
+        }
+        .create-btn:hover {
+            background: #f1f5f9;
+        }
+        .create-btn i {
+            font-size: 18px;
+        }
+
+        /* Navigation List */
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #475569;
+            font-size: 15px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            color: #1e293b;
+        }
+
+        .nav-item:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* Active Item */
+        .nav-item.active {
+            background-color: #e2e8f0;
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        /* Sub-menu styling */
+        .sub-menu {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 15px 8px 45px; /* indented */
+            text-decoration: none;
+            color: #475569;
+            font-size: 14px;
+            transition: 0.2s;
+            border-radius: 8px;
+        }
+        
+        .sub-menu:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* Pink Badge */
+        .badge-new {
+            background-color: #fce7f3;
+            color: #9d174d;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #0f172a;
+        }
+        .logout-btn {
+            padding: 8px 16px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <!-- Create Button -->
+        <button class="create-btn">
+            <i class="ph ph-pencil-simple"></i> Create
+        </button>
+
+        <!-- Navigation Links -->
+        <div class="nav-list">
+            <a href="#" class="nav-item">
+                <i class="ph ph-house"></i> Home
+            </a>
+            
+            <!-- Campaigns (Active) -->
+            <a href="#" class="nav-item active">
+                <i class="ph ph-megaphone"></i> Campaigns
+            </a>
+            <a href="#" class="sub-menu">
+                Email templates
+                <span class="badge-new">New</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="ph ph-flow-arrow"></i> Automations
+            </a>
+            <a href="#" class="nav-item">
+                <i class="ph ph-textbox"></i> Forms
+            </a>
+            <a href="#" class="nav-item">
+                <i class="ph ph-users"></i> Audience
+            </a>
+            <a href="#" class="nav-item">
+                <i class="ph ph-chart-bar"></i> Analytics
+            </a>
+            <a href="#" class="nav-item">
+                <i class="ph ph-browser"></i> Website
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="dashboard-header">
+            <h1>Welcome to your Dashboard</h1>
+            <a href="index.html" class="logout-btn">Log Out</a>
+        </header>
+
+        <p>This is your secure portal area. Select an option from the sidebar to manage your campaigns, view analytics, and interact with your audience.</p>
+    </main>
+
+</body>
+</html>

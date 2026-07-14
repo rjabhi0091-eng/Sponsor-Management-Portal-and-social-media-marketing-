@@ -1,0 +1,63 @@
+.admin-header {
+    background-color: #0b0c10;
+    padding: 20px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #1e293b;
+}
+.admin-header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #3b82f6;
+}
+.back-home {
+    color: #cbd5e1;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+.back-home:hover {
+    color: #3b82f6;
+}
+
+.admin-content {
+    padding: 40px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.admin-table-wrapper {
+    margin-bottom: 40px;
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px solid #334155;
+    overflow-x: auto;
+}
+
+.admin-table-wrapper h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    font-size: 13px;
+}
+.btn-approve { background: #10b981; color: white; }
+.btn-reject { background: #ef4444; color: white; }
+.btn-view { background: #3b82f6; color: white; }

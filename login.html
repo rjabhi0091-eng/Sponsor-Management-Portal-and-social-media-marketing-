@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#8b5cf6" />
+    <title>Login - R-Abhi Tech Solution</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #09090b;
+            color: #fff;
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .back-home {
+            position: absolute;
+            top: 30px;
+            left: 5%;
+            color: #a1a1aa;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            z-index: 100;
+            transition: 0.3s;
+        }
+        .back-home:hover {
+            color: #8b5cf6;
+        }
+
+        .login-card {
+            background: rgba(24, 24, 27, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        /* Selection Section */
+        .selection-section {
+            display: flex;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .select-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #a1a1aa;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .select-btn.active {
+            background: rgba(139, 92, 246, 0.2);
+            color: #fff;
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.1);
+        }
+
+        .login-card h2 {
+            margin-top: 0;
+            font-size: 26px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            transition: 0.3s;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            color: #a1a1aa;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: #18181b;
+            color: #fff;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Password Toggle */
+        .password-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-container input {
+            padding-right: 40px;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            color: #a1a1aa;
+            cursor: pointer;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+        .toggle-password:hover {
+            color: #8b5cf6;
+        }
+
+        /* Login Options (Remember Me & Forgot Pwd) */
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .login-options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #a1a1aa;
+            cursor: pointer;
+        }
+        .login-options a {
+            color: #8b5cf6;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .login-options a:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: #fff;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .login-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Social Login Styles */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #71717a;
+            margin: 25px 0 20px 0;
+            font-size: 14px;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .divider::before { margin-right: 10px; }
+        .divider::after { margin-left: 10px; }
+
+        .social-login {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .social-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+        .social-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.4);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-home"><ion-icon name="arrow-back-outline"></ion-icon> Back to Home</a>
+
+    <div class="login-card">
+        
+        <!-- Selection Section -->
+        <div class="selection-section">
+            <button class="select-btn active" onclick="setLoginType('sponsor', this)">Sponsor</button>
+            <button class="select-btn" onclick="setLoginType('client', this)">Client</button>
+        </div>
+
+        <h2 id="login-title"><ion-icon name="business-outline" id="login-icon"></ion-icon> <span id="login-text">Sponsor Login</span></h2>
+        
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="email-input" required placeholder="sponsor@company.com" />
+            </div>
+            
+            <div class="form-group">
+                <label>Password</label>
+                <div class="password-container">
+                    <input type="password" id="password-input" required placeholder="********" />
+                    <ion-icon name="eye-outline" class="toggle-password" onclick="togglePasswordVisibility()"></ion-icon>
+                </div>
+            </div>
+
+            <!-- Login Options -->
+            <div class="login-options">
+                <label><input type="checkbox" id="remember-me"> Remember me</label>
+                <a href="#" onclick="alert('Password reset link sent to your email.')">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn" id="submit-btn">Login as Sponsor</button>
+        </form>
+
+        <!-- Social Login -->
+        <div class="divider">Or continue with</div>
+        <div class="social-login">
+            <button class="social-btn" title="Login with Google" onclick="alert('Google Login feature coming soon!')"><ion-icon name="logo-google"></ion-icon></button>
+            <button class="social-btn" title="Login with Facebook" onclick="alert('Facebook Login feature coming soon!')"><ion-icon name="logo-facebook"></ion-icon></button>
+            <button class="social-btn" title="Login with Twitter/X" onclick="alert('Twitter/X Login feature coming soon!')"><ion-icon name="logo-twitter"></ion-icon></button>
+            <button class="social-btn" title="Login with Apple" onclick="alert('Apple Login feature coming soon!')"><ion-icon name="logo-apple"></ion-icon></button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentType = 'sponsor';
+
+        function setLoginType(type, btnElement) {
+            currentType = type;
+            
+            // Update active button
+            document.querySelectorAll('.select-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Update UI elements based on selection
+            const icon = document.getElementById('login-icon');
+            const text = document.getElementById('login-text');
+            const emailInput = document.getElementById('email-input');
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (type === 'sponsor') {
+                icon.name = 'business-outline';
+                text.innerText = 'Sponsor Login';
+                emailInput.placeholder = 'sponsor@company.com';
+                submitBtn.innerText = 'Login as Sponsor';
+            } else if (type === 'client') {
+                icon.name = 'person-outline';
+                text.innerText = 'Client Login';
+                emailInput.placeholder = 'client@brand.com';
+                submitBtn.innerText = 'Login as Client';
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email-input').value;
+            const password = document.getElementById('password-input').value;
+            const BASE_URL = 'http://127.0.0.1:8000';
+            const endpoint = currentType === 'sponsor' ? '/auth/sponsor-login' : '/auth/client-login';
+                             
+            try {
+                const response = await fetch(BASE_URL + endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, password: password })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('access_token', data.token);
+                    localStorage.setItem('user_type', data.user_type || currentType);
+                    
+                    if (currentType === 'sponsor' || currentType === 'client') {
+                        window.location.href = 'dashboard.html';
+                    }
+                } else {
+                    alert('Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert('An error occurred. Please try again.');
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password-input');
+            const icon = document.querySelector('.toggle-password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.name = 'eye-off-outline';
+            } else {
+                passwordInput.type = 'password';
+                icon.name = 'eye-outline';
+            }
+        }
+    </script>
+</body>
+</html>
