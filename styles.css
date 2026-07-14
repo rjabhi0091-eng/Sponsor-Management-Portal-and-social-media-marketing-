@@ -1,0 +1,619 @@
+/* RESET AND BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #121212;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ---------------- HERO SECTION (User's Exact Code CSS) ---------------- */
+.main {
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.5) 50%), url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1920&q=80');
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+    position: relative;
+}
+
+.navbar {
+    width: 1200px;
+    max-width: 90%;
+    height: 75px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon {
+    width: 200px;
+}
+
+.logo {
+    color: #ff7200;
+    font-size: 28px;
+    font-family: Arial;
+    line-height: 1.2;
+}
+
+.logo-sub {
+    font-size: 14px;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.menu ul {
+    display: flex;
+}
+
+.menu ul li {
+    list-style: none;
+    margin-left: 40px;
+    font-size: 14px;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: 0.4s ease-in-out;
+}
+
+.menu ul li a:hover {
+    color: #ff7200;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.srch {
+    font-family: 'Times New Roman';
+    width: 200px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid #ff7200;
+    color: #fff;
+    border-right: none;
+    font-size: 16px;
+    padding: 10px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.btn {
+    width: 100px;
+    height: 40px;
+    background: #ff7200;
+    border: 2px solid #ff7200;
+    color: #fff;
+    font-size: 15px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    color: #000;
+}
+
+.btn:focus, .srch:focus {
+    outline: none;
+}
+
+.content {
+    width: 1200px;
+    max-width: 90%;
+    margin: auto;
+    color: #fff;
+    position: relative;
+    padding-top: 50px;
+}
+
+.content h1 {
+    font-family: 'Times New Roman';
+    font-size: 50px;
+    letter-spacing: 2px;
+}
+
+.content span {
+    color: #ff7200;
+    font-size: 65px;
+}
+
+.content .par {
+    padding-bottom: 25px;
+    font-family: Arial;
+    letter-spacing: 1.2px;
+    line-height: 30px;
+    margin-top: 10px;
+}
+
+.content .cn {
+    width: 160px;
+    height: 40px;
+    background: #ff7200;
+    border: none;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .4s ease;
+}
+
+.content .cn a {
+    text-decoration: none;
+    color: #000;
+    transition: .3s ease;
+    font-weight: bold;
+}
+
+.cn:hover {
+    background-color: #fff;
+}
+
+.form {
+    width: 280px;
+    height: 420px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.8) 50%);
+    position: absolute;
+    top: 50px;
+    right: 0;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.form h2 {
+    font-family: sans-serif;
+    text-align: center;
+    color: #ff7200;
+    font-size: 22px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 8px;
+    margin-bottom: 20px;
+}
+
+.form input {
+    width: 100%;
+    height: 35px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #ff7200;
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+}
+
+.form input:focus {
+    outline: none;
+}
+
+::placeholder {
+    color: #fff;
+}
+
+.btnn {
+    width: 100%;
+    height: 40px;
+    background: #ff7200;
+    border: none;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.4s ease;
+    font-weight: bold;
+}
+
+.btnn:hover {
+    background: #fff;
+    color: #ff7200;
+}
+
+.form .link {
+    font-size: 16px;
+    padding-top: 15px;
+    text-align: center;
+}
+
+.form .link a {
+    text-decoration: none;
+    color: #ff7200;
+}
+
+.liw {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.icons ion-icon {
+    color: #fff;
+    font-size: 25px;
+    transition: 0.3s ease;
+}
+
+.icons ion-icon:hover {
+    color: #ff7200;
+}
+
+
+/* ---------------- NEW CLEAN SECTIONS ---------------- */
+
+.sections-wrapper {
+    background-color: #121212;
+}
+
+.clean-section {
+    padding: 80px 5%;
+}
+
+.dark-bg {
+    background-color: #1a1a1a;
+}
+
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+}
+
+.section-title span {
+    color: #ff7200;
+}
+
+/* ABOUT SECTION */
+.about-flex {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.about-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.about-text h3 {
+    font-size: 24px;
+    color: #ff7200;
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    line-height: 1.8;
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+.about-cards {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background: #222;
+    padding: 30px;
+    border-left: 4px solid #ff7200;
+    border-radius: 5px;
+}
+
+.card h4 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #ff7200;
+}
+
+.card p {
+    color: #ccc;
+    line-height: 1.6;
+}
+
+/* WORK / DASHBOARD SECTION */
+.dashboard-stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    flex: 1;
+    background: #222;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+    border-bottom: 4px solid #ff7200;
+}
+
+.stat-box h3 {
+    font-size: 18px;
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.stat-box h2 {
+    font-size: 40px;
+    color: #ff7200;
+}
+
+.management-panels {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.management-box {
+    flex: 1;
+    background: #222;
+    padding: 30px;
+    border-radius: 10px;
+    min-width: 300px;
+}
+
+.management-box h3 {
+    color: #ff7200;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.management-form input,
+.management-form select,
+.management-form textarea {
+    width: 100%;
+    padding: 12px;
+    background: #121212;
+    border: 1px solid #333;
+    color: #fff;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.management-form input:focus,
+.management-form select:focus,
+.management-form textarea:focus {
+    outline: none;
+    border-color: #ff7200;
+}
+
+/* MEDIA SECTION */
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.media-item {
+    background: #222;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.media-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 3px solid #ff7200;
+}
+
+.media-item h3 {
+    padding: 20px;
+    text-align: center;
+}
+
+/* CONTACT & REGISTER SECTION */
+.contact-register-flex {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.contact-box {
+    flex: 1;
+    min-width: 300px;
+    background: #222;
+    padding: 40px;
+    border-radius: 10px;
+}
+
+.contact-info {
+    font-size: 16px;
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #111;
+    color: #666;
+    border-top: 1px solid #222;
+}
+
+
+/* SERVICES SECTION */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.service-card {
+    background: #222;
+    padding: 40px 30px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 4px solid transparent;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-bottom: 4px solid #ff7200;
+}
+
+.service-icon ion-icon {
+    font-size: 50px;
+    color: #ff7200;
+    margin-bottom: 20px;
+}
+
+.service-card h3 {
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.service-card p {
+    color: #bbb;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+
+/* ADMIN DASHBOARD SPECIFIC CSS */
+.admin-body {
+    background-color: #121212;
+}
+
+.admin-header-bg {
+    background: #000;
+    border-bottom: 2px solid #ff7200;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.admin-tables-container {
+    background: #1a1a1a;
+    padding: 40px;
+    border-radius: 10px;
+}
+
+.admin-table-wrapper {
+    overflow-x: auto;
+}
+
+.table-header {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.table-header h3 {
+    color: #ff7200;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+    text-align: left;
+}
+
+.admin-table th, .admin-table td {
+    padding: 15px;
+    border-bottom: 1px solid #333;
+}
+
+.admin-table th {
+    background: #ff7200;
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.admin-table tbody tr:hover {
+    background: #222;
+}
+
+/* Action Buttons inside Admin Table */
+.admin-table .action-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 5px;
+    transition: 0.3s;
+}
+
+.admin-table .edit-btn,
+.admin-table .edit-sponsor-btn,
+.admin-table .edit-client-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.admin-table .delete-btn,
+.admin-table .delete-sponsor-btn,
+.admin-table .delete-client-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.admin-table .action-btn:hover {
+    opacity: 0.8;
+}
+
+/* Custom Logo Style */
+.topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.site-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 50%;
+    background-color: white;
+    padding: 5px;
+    border: 3px solid #f44336; /* Red brand color */
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.site-logo:hover {
+    transform: scale(1.05);
+}

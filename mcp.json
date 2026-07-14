@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "math": {
+      "command": "npx",
+      "args": ["mcp-remote", "http://localhost:8787/sse"]
+    }
+  }
+}

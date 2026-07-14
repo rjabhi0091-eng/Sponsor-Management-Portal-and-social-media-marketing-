@@ -1,0 +1,7 @@
+
+      <button id="open-sponsor-login" class="secondary" data-icon="🔐">Sponsor Login</button>
+      <button id="open-client-login" class="secondary" data-icon="👥">Client Login</button>
+      <button id="open-admin-login" class="secondary" data-icon="🛠️">Admin Login</button>
+      <a href="analytics.html" class="secondary" data-icon="🛠️"
+        style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Dashboard</a>
+    
