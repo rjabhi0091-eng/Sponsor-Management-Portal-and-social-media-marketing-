@@ -247,7 +247,7 @@
         
         <form id="login-form" onsubmit="handleLogin(event)">
             <div class="form-group">
-                <label>Email Address</label>
+                <label id="email-label">Email Address</label>
                 <input type="email" id="email-input" required placeholder="sponsor@company.com" />
             </div>
             
@@ -293,22 +293,29 @@
             const icon = document.getElementById('login-icon');
             const text = document.getElementById('login-text');
             const emailInput = document.getElementById('email-input');
+            const emailLabel = document.getElementById('email-label');
             const submitBtn = document.getElementById('submit-btn');
 
             if (type === 'sponsor') {
                 icon.name = 'business-outline';
                 text.innerText = 'Sponsor Login';
                 emailInput.placeholder = 'sponsor@company.com';
+                emailInput.type = 'email';
+                if (emailLabel) emailLabel.innerText = 'Email Address';
                 submitBtn.innerText = 'Login as Sponsor';
             } else if (type === 'client') {
                 icon.name = 'person-outline';
                 text.innerText = 'Client Login';
                 emailInput.placeholder = 'client@brand.com';
+                emailInput.type = 'email';
+                if (emailLabel) emailLabel.innerText = 'Email Address';
                 submitBtn.innerText = 'Login as Client';
             } else if (type === 'admin') {
                 icon.name = 'shield-checkmark-outline';
                 text.innerText = 'Admin Login';
-                emailInput.placeholder = 'admin@example.com';
+                emailInput.placeholder = 'Admin ID or Email';
+                emailInput.type = 'text';
+                if (emailLabel) emailLabel.innerText = 'Admin ID or Email';
                 submitBtn.innerText = 'Login as Admin';
             }
         }
@@ -331,13 +338,20 @@
                 
                 if (response.ok) {
                     const data = await response.json();
-                    localStorage.setItem('access_token', data.token);
-                    localStorage.setItem('user_type', data.user_type || currentType);
                     
                     if (currentType === 'admin') {
+                        localStorage.setItem('access_token', data.token);
+                        localStorage.setItem('user_type', data.user_type || currentType);
                         window.location.href = 'admin.html';
                     } else {
-                        window.location.href = 'dashboard.html';
+                        // Store the user object exactly as app.js expects it
+                        const currentUser = {
+                            role: data.role,
+                            name: data.name,
+                            token: data.token
+                        };
+                        localStorage.setItem('sponsorPortalCurrentUser', JSON.stringify(currentUser));
+                        window.location.href = 'index.html';
                     }
                 } else {
                     alert('Login failed. Please check your credentials.');

@@ -267,7 +267,7 @@
         const BASE_URL = 'http://127.0.0.1:8000';
 
         if (!token) {
-            window.location.href = 'index.html';
+            window.location.href = 'login.html';
         }
 
         async function updateAdminProfile(event) {
@@ -301,7 +301,7 @@
                     document.getElementById('admin-profile-form').reset();
                     if (email || password) {
                         localStorage.removeItem('access_token');
-                        window.location.href = 'index.html';
+                        window.location.href = 'login.html';
                     }
                 } else {
                     const data = await response.json();
@@ -328,7 +328,7 @@
                 if (spRes.status === 401 || clRes.status === 401 || spRes.status === 403) {
                     alert('Session expired. Please log in again.');
                     localStorage.removeItem('access_token');
-                    window.location.href = 'index.html';
+                    window.location.href = 'login.html';
                     return;
                 }
 

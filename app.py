@@ -356,7 +356,9 @@ def client_login(payload: schemas.UserLogin, db: Session = Depends(get_db)):
 
 @app.post("/auth/admin-login", response_model=schemas.LoginResponse, tags=["auth"])
 def admin_login(payload: schemas.UserLogin, db: Session = Depends(get_db)):
-    admin = db.query(models.Admin).filter(models.Admin.email == payload.email).first()
+    admin = db.query(models.Admin).filter(
+        or_(models.Admin.email == payload.email, models.Admin.username == payload.email)
+    ).first()
     if not admin or not admin.verify_password(payload.password):
         raise HTTPException(status_code=401, detail="Invalid admin credentials")
     db.commit()
