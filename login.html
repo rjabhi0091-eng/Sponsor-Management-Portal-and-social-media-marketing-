@@ -251,7 +251,7 @@
                 <input type="email" id="email-input" required placeholder="sponsor@company.com" />
             </div>
             
-            <div class="form-group">
+            <div class="form-group" id="password-group">
                 <label>Password</label>
                 <div class="password-container">
                     <input type="password" id="password-input" required placeholder="********" />
@@ -271,10 +271,10 @@
         <!-- Social Login -->
         <div class="divider">Or continue with</div>
         <div class="social-login">
-            <button class="social-btn" title="Login with Google" onclick="alert('Google Login feature coming soon!')"><ion-icon name="logo-google"></ion-icon></button>
-            <button class="social-btn" title="Login with Facebook" onclick="alert('Facebook Login feature coming soon!')"><ion-icon name="logo-facebook"></ion-icon></button>
-            <button class="social-btn" title="Login with Twitter/X" onclick="alert('Twitter/X Login feature coming soon!')"><ion-icon name="logo-twitter"></ion-icon></button>
-            <button class="social-btn" title="Login with Apple" onclick="alert('Apple Login feature coming soon!')"><ion-icon name="logo-apple"></ion-icon></button>
+            <button class="social-btn" title="Login with Google" onclick="window.location.href='http://127.0.0.1:8000/auth/social/google'"><ion-icon name="logo-google"></ion-icon></button>
+            <button class="social-btn" title="Login with Facebook" onclick="window.location.href='http://127.0.0.1:8000/auth/social/facebook'"><ion-icon name="logo-facebook"></ion-icon></button>
+            <button class="social-btn" title="Login with Twitter/X" onclick="window.location.href='http://127.0.0.1:8000/auth/social/twitter'"><ion-icon name="logo-twitter"></ion-icon></button>
+            <button class="social-btn" title="Login with Apple" onclick="window.location.href='http://127.0.0.1:8000/auth/social/apple'"><ion-icon name="logo-apple"></ion-icon></button>
         </div>
 
     </div>
@@ -295,6 +295,8 @@
             const emailInput = document.getElementById('email-input');
             const emailLabel = document.getElementById('email-label');
             const submitBtn = document.getElementById('submit-btn');
+            const passwordGroup = document.getElementById('password-group');
+            const passwordInput = document.getElementById('password-input');
 
             if (type === 'sponsor') {
                 icon.name = 'business-outline';
@@ -303,6 +305,8 @@
                 emailInput.type = 'email';
                 if (emailLabel) emailLabel.innerText = 'Email Address';
                 submitBtn.innerText = 'Login as Sponsor';
+                if (passwordGroup) passwordGroup.style.display = 'block';
+                if (passwordInput) passwordInput.required = true;
             } else if (type === 'client') {
                 icon.name = 'person-outline';
                 text.innerText = 'Client Login';
@@ -310,6 +314,8 @@
                 emailInput.type = 'email';
                 if (emailLabel) emailLabel.innerText = 'Email Address';
                 submitBtn.innerText = 'Login as Client';
+                if (passwordGroup) passwordGroup.style.display = 'block';
+                if (passwordInput) passwordInput.required = true;
             } else if (type === 'admin') {
                 icon.name = 'shield-checkmark-outline';
                 text.innerText = 'Admin Login';
@@ -317,6 +323,8 @@
                 emailInput.type = 'text';
                 if (emailLabel) emailLabel.innerText = 'Admin ID or Email';
                 submitBtn.innerText = 'Login as Admin';
+                if (passwordGroup) passwordGroup.style.display = 'block';
+                if (passwordInput) passwordInput.required = true;
             }
         }
 
@@ -354,11 +362,12 @@
                         window.location.href = 'index.html';
                     }
                 } else {
-                    alert('Login failed. Please check your credentials.');
+                    const errorData = await response.json().catch(() => ({}));
+                    alert(errorData.detail || 'Login failed. Please check your credentials.');
                 }
             } catch (error) {
                 console.error('Error during login:', error);
-                alert('An error occurred. Please try again.');
+                alert('An error occurred connecting to the server. Please ensure the backend is running.');
             }
         }
 

@@ -245,9 +245,23 @@ function saveCurrentUser() {
 
 function loadCurrentUser() {
   try {
-    const stored = localStorage.getItem("sponsorPortalCurrentUser");
-    if (stored) {
-      currentUser = JSON.parse(stored);
+    const params = new URLSearchParams(window.location.search);
+    const socialToken = params.get('social_token');
+    
+    if (socialToken) {
+      currentUser = {
+        role: params.get('role') || 'sponsor',
+        name: params.get('name') || 'User',
+        token: socialToken
+      };
+      saveCurrentUser();
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else {
+      const stored = localStorage.getItem("sponsorPortalCurrentUser");
+      if (stored) {
+        currentUser = JSON.parse(stored);
+      }
     }
   } catch (err) {
     console.warn("Unable to restore user state", err);

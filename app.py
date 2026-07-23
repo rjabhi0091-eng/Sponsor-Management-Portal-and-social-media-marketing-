@@ -2,8 +2,8 @@ import os
 import smtplib
 from email.message import EmailMessage
 
-from fastapi import FastAPI, Depends, HTTPException
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, Depends, HTTPException, Request
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -18,6 +18,9 @@ import models
 import schemas
 import google_integration
 from database import SessionLocal, engine, get_db
+
+from authlib.integrations.starlette_client import OAuth
+from starlette.middleware.sessions import SessionMiddleware
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -68,6 +71,44 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key-for-development-o
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 security = HTTPBearer()
+
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
+
+oauth = OAuth()
+oauth.register(
+    name='google',
+    client_id=os.environ.get("GOOGLE_CLIENT_ID", ""),
+    client_secret=os.environ.get("GOOGLE_CLIENT_SECRET", ""),
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'}
+)
+oauth.register(
+    name='facebook',
+    client_id=os.environ.get("FACEBOOK_CLIENT_ID", ""),
+    client_secret=os.environ.get("FACEBOOK_CLIENT_SECRET", ""),
+    api_base_url='https://graph.facebook.com/',
+    access_token_url='https://graph.facebook.com/v12.0/oauth/access_token',
+    authorize_url='https://www.facebook.com/v12.0/dialog/oauth',
+    client_kwargs={'scope': 'email public_profile'}
+)
+oauth.register(
+    name='twitter',
+    client_id=os.environ.get("TWITTER_CLIENT_ID", ""),
+    client_secret=os.environ.get("TWITTER_CLIENT_SECRET", ""),
+    api_base_url='https://api.twitter.com/2/',
+    access_token_url='https://api.twitter.com/2/oauth2/token',
+    authorize_url='https://twitter.com/i/oauth2/authorize',
+    client_kwargs={'scope': 'users.read tweet.read'}
+)
+oauth.register(
+    name='apple',
+    client_id=os.environ.get("APPLE_CLIENT_ID", ""),
+    client_secret=os.environ.get("APPLE_CLIENT_SECRET", ""),
+    api_base_url='https://appleid.apple.com/',
+    access_token_url='https://appleid.apple.com/auth/token',
+    authorize_url='https://appleid.apple.com/auth/authorize',
+    client_kwargs={'scope': 'name email'}
+)
 
 def create_access_token(data: dict):
     to_encode = data.copy()
@@ -365,6 +406,70 @@ def admin_login(payload: schemas.UserLogin, db: Session = Depends(get_db)):
     token = create_access_token({"sub": admin.email, "role": "admin"})
     return schemas.LoginResponse(role="admin", name=admin.username, message="Admin login successful", token=token)
 
+@app.get("/auth/social/{provider}")
+async def social_login(provider: str, request: Request):
+    """
+    Redirects the user to the social provider's authentication page.
+    Uses real OAuth if credentials are provided in the environment, else falls back to mock.
+    """
+    client = oauth.create_client(provider)
+    if client and client.client_id:
+        redirect_uri = str(request.url_for('social_callback', provider=provider))
+        return await client.authorize_redirect(request, redirect_uri)
+    
+    # Mock redirect back to the callback
+    return RedirectResponse(url=f"/auth/social/callback/{provider}?code=mock_code_123")
+
+
+@app.get("/auth/social/callback/{provider}")
+async def social_callback(provider: str, request: Request, code: str = None, error: str = None, db: Session = Depends(get_db)):
+    """
+    Handles the callback from the social provider.
+    Mocks a successful login or uses real OAuth if configured.
+    """
+    if error:
+        return RedirectResponse(url=f"/login.html?error={error}")
+
+    if not code:
+        return RedirectResponse(url="/login.html?error=missing_code")
+
+    client = oauth.create_client(provider)
+    if client and client.client_id:
+        token = await client.authorize_access_token(request)
+        userinfo = token.get('userinfo')
+        if not userinfo:
+            userinfo = await client.userinfo(token=token)
+        mock_email = userinfo.get("email")
+        mock_name = userinfo.get("name", f"{provider.capitalize()} User")
+    else:
+        # Mock fallback
+        mock_email = f"user@{provider}.com"
+        mock_name = f"{provider.capitalize()} User"
+    
+    # Check if a sponsor with this email exists
+    sponsor = db.query(models.Sponsor).filter(models.Sponsor.email == mock_email).first()
+    
+    if not sponsor:
+        # Create a mock sponsor for demonstration
+        new_sponsor = models.Sponsor(
+            name=mock_name,
+            email=mock_email,
+            phone="1234567890",
+            status="active"
+        )
+        new_sponsor.set_password("mock_password_do_not_use")
+        db.add(new_sponsor)
+        db.commit()
+        db.refresh(new_sponsor)
+        sponsor = new_sponsor
+
+    # Create our JWT token
+    token = create_access_token({"sub": sponsor.email, "role": "sponsor"})
+    
+    # Redirect back to index.html with the token and user data in the hash or query params
+    redirect_url = f"/index.html?social_token={token}&role=sponsor&name={sponsor.name}"
+    return RedirectResponse(url=redirect_url)
+
 
 @app.put("/admins/me", response_model=schemas.Admin, tags=["admin"])
 def update_admin(admin_update: schemas.AdminUpdate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
@@ -478,3 +583,111 @@ def chat_assistant(payload: schemas.ChatRequest):
     else:
         reply = "I can help with sponsorship planning, client onboarding, media campaigns, and portal navigation."
     return {"reply": reply}
+
+
+@app.post("/api/marketing/send-email", response_model=schemas.EmailCampaignResponse, tags=["marketing"])
+def send_marketing_email(payload: schemas.EmailCampaignRequest, db: Session = Depends(get_db)):
+    recipients = []
+    
+    if payload.target_group == "all_sponsors":
+        sponsors = db.query(models.Sponsor).all()
+        recipients = [s.email for s in sponsors if s.email]
+    elif payload.target_group == "all_clients":
+        clients = db.query(models.Client).all()
+        recipients = [c.email for c in clients if c.email]
+    elif payload.target_group == "all_users":
+        sponsors = db.query(models.Sponsor).all()
+        clients = db.query(models.Client).all()
+        recipients = list(set([s.email for s in sponsors if s.email] + [c.email for c in clients if c.email]))
+    elif payload.recipient_email:
+        recipients = [email.strip() for email in payload.recipient_email.split(",") if email.strip()]
+
+    if not recipients:
+        return schemas.EmailCampaignResponse(
+            status="warning",
+            delivered_count=0,
+            failed_count=0,
+            message="No valid recipients found for the selected target group."
+        )
+
+    smtp_host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+    smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+    smtp_user = os.environ.get("SMTP_USERNAME") or os.environ.get("GMAIL_USERNAME")
+    smtp_password = os.environ.get("SMTP_PASSWORD") or os.environ.get("GMAIL_PASSWORD")
+
+    delivered_count = 0
+    failed_count = 0
+
+    # Build Email Body / Template
+    template_header = ""
+    if payload.template_name == "sponsor_invite":
+        template_header = "[Sponsor Opportunity] "
+    elif payload.template_name == "promo":
+        template_header = "[Special Offer] "
+    elif payload.template_name == "campaign_update":
+        template_header = "[Campaign Update] "
+
+    full_subject = f"{template_header}{payload.subject}"
+
+    if smtp_user and smtp_password:
+        try:
+            with smtplib.SMTP(smtp_host, smtp_port) as server:
+                server.starttls()
+                server.login(smtp_user, smtp_password)
+                for rcpt in recipients:
+                    try:
+                        email_msg = EmailMessage()
+                        email_msg["Subject"] = full_subject
+                        email_msg["From"] = smtp_user
+                        email_msg["To"] = rcpt
+                        email_msg.set_content(payload.body)
+                        server.send_message(email_msg)
+                        delivered_count += 1
+                    except Exception as e:
+                        print(f"Failed to send email to {rcpt}: {e}")
+                        failed_count += 1
+            msg = f"Campaign broadcast processed. Delivered: {delivered_count}, Failed: {failed_count} via SMTP."
+        except Exception as e:
+            return schemas.EmailCampaignResponse(
+                status="error",
+                delivered_count=0,
+                failed_count=len(recipients),
+                message=f"SMTP server connection error: {str(e)}"
+            )
+    else:
+        # Development / Simulation mode
+        delivered_count = len(recipients)
+        msg = f"[Demo Mode] Campaign dispatched successfully to {delivered_count} recipient(s). Configure SMTP credentials in .env for real email delivery."
+
+    # Record campaign in DB if model exists
+    try:
+        camp = models.MarketingCampaign(
+            title=full_subject,
+            platform="email_broadcast",
+            status="completed",
+            metrics=f"Recipients: {delivered_count}"
+        )
+        db.add(camp)
+        db.commit()
+    except Exception as err:
+        print(f"Could not record campaign history: {err}")
+
+    return schemas.EmailCampaignResponse(
+        status="success",
+        delivered_count=delivered_count,
+        failed_count=failed_count,
+        message=msg
+    )
+
+
+@app.get("/api/marketing/media-assets", tags=["marketing"])
+def get_media_assets():
+    assets = [
+        {"id": 1, "name": "Social Media Marketing Poster", "file": "Social_media_marketing.png", "type": "Image", "size": "81 KB"},
+        {"id": 2, "name": "Dashboard Banner", "file": "dashboard-bg.png", "type": "Banner", "size": "546 KB"},
+        {"id": 3, "name": "Brand Logo (Dark)", "file": "logo-bg.png", "type": "Logo", "size": "2.1 MB"},
+        {"id": 4, "name": "Portal Vector Illustration", "file": "portal-illustration.svg", "type": "SVG", "size": "2 KB"},
+        {"id": 5, "name": "Marketing Statistics 2025", "file": "social-media-marketing-statistics-for-2025.jpg", "type": "Infographic", "size": "31 KB"}
+    ]
+    return {"assets": assets}
+

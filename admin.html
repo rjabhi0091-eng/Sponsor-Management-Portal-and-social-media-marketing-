@@ -100,6 +100,8 @@
                 name="stats-chart-outline"></ion-icon> Analytics Board</a>
         <a href="#" class="sidebar-link" onclick="switchTab('registration')"><ion-icon name="people-outline"></ion-icon>
             Registration Board</a>
+        <a href="#" class="sidebar-link" onclick="switchTab('marketing-media')"><ion-icon name="megaphone-outline"></ion-icon>
+            Marketing & Media Hub</a>
         <a href="#" class="sidebar-link" onclick="switchTab('feedback')"><ion-icon name="chatbubbles-outline"></ion-icon>
             Feedback Review</a>
 
@@ -220,6 +222,105 @@
                     </div>
                     <button type="submit" style="padding: 12px; background: #8b5cf6; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px;">Update Profile</button>
                 </form>
+            </div>
+        </div>
+
+        <!-- Marketing & Media Hub Tab -->
+        <div id="marketing-media" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 style="color: #fff; margin: 0;">Marketing & Media Hub</h1>
+                <span style="color: #a1a1aa; font-size: 14px;">Unified Broadcast & Asset Management</span>
+            </div>
+
+            <!-- Grid Layout: Email Sender & Media Gallery -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+                
+                <!-- Email Broadcast & Sender Card -->
+                <div class="glass-panel" style="padding: 25px; border-radius: 16px;">
+                    <h3 style="color: #8b5cf6; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+                        <ion-icon name="mail-unread-outline"></ion-icon> Email Sender & Campaign Broadcast
+                    </h3>
+                    <form id="email-sender-form" onsubmit="handleSendEmail(event)">
+                        <div style="margin-bottom: 15px;">
+                            <label style="color: #a1a1aa; display: block; margin-bottom: 5px; font-size: 14px;">Target Audience</label>
+                            <select id="email-target-group" onchange="toggleRecipientField()" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: #18181b; color: #fff;">
+                                <option value="all_sponsors">All Active Sponsors</option>
+                                <option value="all_clients">All Active Clients</option>
+                                <option value="all_users">All Users (Sponsors & Clients)</option>
+                                <option value="custom">Custom Recipient Email(s)</option>
+                            </select>
+                        </div>
+
+                        <div id="custom-email-group" style="margin-bottom: 15px; display: none;">
+                            <label style="color: #a1a1aa; display: block; margin-bottom: 5px; font-size: 14px;">Recipient Email Address(es)</label>
+                            <input type="text" id="email-recipients" placeholder="sponsor@company.com, client@brand.com" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: #18181b; color: #fff; box-sizing: border-box;">
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label style="color: #a1a1aa; display: block; margin-bottom: 5px; font-size: 14px;">Campaign Preset / Template</label>
+                            <select id="email-template" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: #18181b; color: #fff;">
+                                <option value="default">Standard Announcement</option>
+                                <option value="sponsor_invite">Sponsorship Partnership Invitation</option>
+                                <option value="promo">Special Promotional Discount</option>
+                                <option value="campaign_update">Campaign Milestone Update</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label style="color: #a1a1aa; display: block; margin-bottom: 5px; font-size: 14px;">Email Subject</label>
+                            <input type="text" id="email-subject" required placeholder="e.g. Exclusive Sponsorship Opportunity for Q4" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: #18181b; color: #fff; box-sizing: border-box;">
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="color: #a1a1aa; display: block; margin-bottom: 5px; font-size: 14px;">Message Body (Rich Text / Plain)</label>
+                            <textarea id="email-body" rows="5" required placeholder="Write your marketing message or campaign updates here..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: #18181b; color: #fff; box-sizing: border-box; resize: vertical;"></textarea>
+                        </div>
+
+                        <button type="submit" id="send-email-btn" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <ion-icon name="send-outline"></ion-icon> Dispatch Email Campaign
+                        </button>
+                    </form>
+                    <div id="email-status-box" style="margin-top: 15px; padding: 12px; border-radius: 8px; font-size: 14px; display: none;"></div>
+                </div>
+
+                <!-- Media Assets & Marketing Content -->
+                <div class="glass-panel" style="padding: 25px; border-radius: 16px; display: flex; flex-direction: column;">
+                    <h3 style="color: #3b82f6; margin-top: 0; display: flex; align-items: center; gap: 10px;">
+                        <ion-icon name="images-outline"></ion-icon> Media Assets & Brand Portal
+                    </h3>
+
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <input type="file" id="media-upload-input" style="display: none;" onchange="handleMediaUpload(event)">
+                            <button type="button" onclick="document.getElementById('media-upload-input').click()" style="padding: 8px 14px; background: rgba(139,92,246,0.2); border: 1px solid rgba(139,92,246,0.4); color: #fff; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                                <ion-icon name="cloud-upload-outline"></ion-icon> Upload Media Asset
+                            </button>
+                            <button type="button" onclick="loadMediaAssets()" style="padding: 8px 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #a1a1aa; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                                <ion-icon name="refresh-outline"></ion-icon> Refresh Gallery
+                            </button>
+                        </div>
+
+                        <!-- Media Asset Grid -->
+                        <div id="media-assets-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; max-height: 330px; overflow-y: auto; padding-right: 5px;">
+                            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                                <img src="Social_media_marketing.png" style="width: 100%; height: 75px; object-fit: cover; border-radius: 6px; margin-bottom: 8px;">
+                                <span style="font-size: 12px; color: #fff; display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">Social Poster</span>
+                                <small style="font-size: 10px; color: #a1a1aa;">81 KB</small>
+                            </div>
+                            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                                <img src="dashboard-bg.png" style="width: 100%; height: 75px; object-fit: cover; border-radius: 6px; margin-bottom: 8px;">
+                                <span style="font-size: 12px; color: #fff; display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">Dashboard Banner</span>
+                                <small style="font-size: 10px; color: #a1a1aa;">546 KB</small>
+                            </div>
+                            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                                <img src="logo-bg.png" style="width: 100%; height: 75px; object-fit: cover; border-radius: 6px; margin-bottom: 8px;">
+                                <span style="font-size: 12px; color: #fff; display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">Brand Logo</span>
+                                <small style="font-size: 10px; color: #a1a1aa;">2.1 MB</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -390,6 +491,100 @@
                 }
             } catch(err) {
                 console.error(err);
+            }
+        }
+
+        function toggleRecipientField() {
+            const targetGroup = document.getElementById('email-target-group').value;
+            const customGroup = document.getElementById('custom-email-group');
+            if (targetGroup === 'custom') {
+                customGroup.style.display = 'block';
+                document.getElementById('email-recipients').required = true;
+            } else {
+                customGroup.style.display = 'none';
+                document.getElementById('email-recipients').required = false;
+            }
+        }
+
+        async function handleSendEmail(event) {
+            event.preventDefault();
+            const btn = document.getElementById('send-email-btn');
+            const statusBox = document.getElementById('email-status-box');
+            
+            const targetGroup = document.getElementById('email-target-group').value;
+            const recipients = document.getElementById('email-recipients').value;
+            const template = document.getElementById('email-template').value;
+            const subject = document.getElementById('email-subject').value;
+            const body = document.getElementById('email-body').value;
+
+            btn.disabled = true;
+            btn.innerText = "Dispatching Email...";
+            statusBox.style.display = "block";
+            statusBox.style.background = "rgba(59, 130, 246, 0.15)";
+            statusBox.style.color = "#60a5fa";
+            statusBox.innerText = "Processing email campaign dispatch...";
+
+            try {
+                const response = await fetch(BASE_URL + '/api/marketing/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        target_group: targetGroup,
+                        recipient_email: recipients,
+                        template_name: template,
+                        subject: subject,
+                        body: body
+                    })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    statusBox.style.background = data.status === 'error' ? "rgba(239, 68, 68, 0.15)" : "rgba(16, 185, 129, 0.15)";
+                    statusBox.style.color = data.status === 'error' ? "#f87171" : "#34d399";
+                    statusBox.innerText = data.message;
+                    if (data.status !== 'error') {
+                        document.getElementById('email-sender-form').reset();
+                        toggleRecipientField();
+                    }
+                } else {
+                    statusBox.style.background = "rgba(239, 68, 68, 0.15)";
+                    statusBox.style.color = "#f87171";
+                    statusBox.innerText = data.detail || "Failed to dispatch email.";
+                }
+            } catch (error) {
+                console.error("Email send error:", error);
+                statusBox.style.background = "rgba(239, 68, 68, 0.15)";
+                statusBox.style.color = "#f87171";
+                statusBox.innerText = "Error connecting to backend server.";
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<ion-icon name="send-outline"></ion-icon> Dispatch Email Campaign`;
+            }
+        }
+
+        async function loadMediaAssets() {
+            try {
+                const res = await fetch(BASE_URL + '/api/marketing/media-assets');
+                if (res.ok) {
+                    const data = await res.json();
+                    const grid = document.getElementById('media-assets-grid');
+                    grid.innerHTML = data.assets.map(asset => `
+                        <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                            <img src="${asset.file}" style="width: 100%; height: 75px; object-fit: cover; border-radius: 6px; margin-bottom: 8px;" onerror="this.src='portal-illustration.svg'">
+                            <span style="font-size: 12px; color: #fff; display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${asset.name}</span>
+                            <small style="font-size: 10px; color: #a1a1aa;">${asset.size}</small>
+                        </div>
+                    `).join('');
+                }
+            } catch(e) {
+                console.error("Failed loading assets:", e);
+            }
+        }
+
+        function handleMediaUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                alert(`Uploaded "${file.name}" to media portal successfully!`);
             }
         }
 

@@ -140,3 +140,19 @@ class MarketingCampaignCreate(BaseModel):
     platform: str
     status: Optional[str] = "planning"
     metrics: Optional[str] = None
+
+
+class EmailCampaignRequest(BaseModel):
+    recipient_email: Optional[str] = None  # Specific email or target group like "all_sponsors", "all_clients"
+    target_group: Optional[str] = "custom"  # "custom", "all_sponsors", "all_clients", "all_users"
+    subject: str
+    body: str
+    template_name: Optional[str] = "default"  # "default", "sponsor_invite", "campaign_update", "promo"
+
+
+class EmailCampaignResponse(BaseModel):
+    status: str
+    delivered_count: int
+    failed_count: int
+    message: str
+
