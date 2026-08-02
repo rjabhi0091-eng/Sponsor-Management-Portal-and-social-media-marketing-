@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
 from datetime import datetime
 
@@ -28,8 +28,7 @@ class Sponsor(SponsorBase):
     id: int
     created_at: Optional[datetime] = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ClientBase(BaseModel):
@@ -63,8 +62,7 @@ class Client(ClientBase):
     sponsor_name: Optional[str] = None
     created_at: Optional[datetime] = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AdminBase(BaseModel):
@@ -86,8 +84,7 @@ class Admin(AdminBase):
     id: int
     created_at: Optional[datetime] = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UserLogin(BaseModel):
@@ -127,8 +124,7 @@ class Summary(BaseModel):
     active_clients: int
     prospect_sponsors: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ContactMessageCreate(BaseModel):
     name: str

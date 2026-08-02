@@ -170,8 +170,27 @@ def send_contact_email(name: str, email: str, message: str):
 
 
 @app.get("/", response_class=FileResponse, tags=["ui"])
+@app.get("/index.html", response_class=FileResponse, tags=["ui"])
 def root():
     return FileResponse(os.path.join(BASE_DIR, "index.html"))
+
+
+@app.get("/login", response_class=FileResponse, tags=["ui"])
+@app.get("/login.html", response_class=FileResponse, tags=["ui"])
+def login_page():
+    return FileResponse(os.path.join(BASE_DIR, "login.html"))
+
+
+@app.get("/admin", response_class=FileResponse, tags=["ui"])
+@app.get("/admin.html", response_class=FileResponse, tags=["ui"])
+def admin_page():
+    return FileResponse(os.path.join(BASE_DIR, "admin.html"))
+
+
+@app.get("/analytics", response_class=FileResponse, tags=["ui"])
+@app.get("/analytics.html", response_class=FileResponse, tags=["ui"])
+def analytics_page():
+    return FileResponse(os.path.join(BASE_DIR, "analytics.html"))
 
 
 @app.get("/about", response_class=FileResponse, tags=["ui"])
@@ -197,11 +216,6 @@ def contact_page():
 @app.get("/work", response_class=FileResponse, tags=["ui"])
 def work_page():
     return FileResponse(os.path.join(BASE_DIR, "work.html"))
-
-
-@app.get("/admin", response_class=FileResponse, tags=["ui"])
-def admin_page():
-    return FileResponse(os.path.join(BASE_DIR, "admin.html"))
 
 
 @app.post("/sponsors/", response_model=schemas.Sponsor, tags=["sponsors"])
@@ -690,4 +704,7 @@ def get_media_assets():
         {"id": 5, "name": "Marketing Statistics 2025", "file": "social-media-marketing-statistics-for-2025.jpg", "type": "Infographic", "size": "31 KB"}
     ]
     return {"assets": assets}
+
+
+app.mount("/", StaticFiles(directory=BASE_DIR, html=True), name="site_root")
 

@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 
 # SQLAlchemy for token storage
 from sqlalchemy import create_engine, Column, Integer, Text
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
